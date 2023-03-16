@@ -23,6 +23,9 @@ h1 {
 main {
     margin-right: 20%;
     margin-left: 20%;
+}
+
+.intro-screen {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -30,7 +33,7 @@ main {
     text-align: center;
 }
 
-main p {
+.intro-screen p {
     font-size: 2vw;
 }
 
@@ -50,5 +53,38 @@ main p {
 
 
 button:hover {
+    background-color: rgb(189, 96, 231)
+}
+
+.quiz-questions {
+    display: none;
+    flex-direction: column;
+    text-align: left;
+}
+
+.quiz-questions h2 {
+    font-size: 3.5vw;
+    padding-bottom: 3%;
+}
+
+.options {
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+}
+
+.options button {
+    font-size: 2vw;
+    padding: 1% 2% 1% 2%;
+    width: 40%;
+    background-color: rgb(53, 28, 117);
+    color: white;
+    border-radius: 10px;
+    border: none;
+    margin-bottom: 2%;
+    text-align: left;
+}
+
+.options button:hover {
     background-color: rgb(189, 96, 231)
 }
