@@ -2,10 +2,13 @@ let start = document.querySelector("#start-button")
 let intro = document.querySelector("#intro-screen")
 let choice = document.querySelector("#options")
 let quiz = document.querySelector("#quiz-questions")
+let title = document.querySelector("h2")
+let buttons = quiz.querySelectorAll(".option")
 // console.log(start);
 // console.log(intro);
 // console.log(choice);
 // console.log(quiz);
+console.log(buttons);
 
 
 const questions = [
@@ -17,33 +20,33 @@ const questions = [
     {
         title: "What is Python?",
         choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
-        correctAnswer: "Python"
+        correctAnswer: "1. Programming Language"
     },
     {
         title: "What is HTML?",
         choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
-        correctAnswer: "HTML"
+        correctAnswer: "1. Programming Language"
     },
     {
         title: "What is CSS?",
         choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
-        correctAnswer: "CSS"
+        correctAnswer: "1. Programming Language"
     },
     {
         title: "What is Elixir?",
         choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
-        correctAnswer: "Elixir"
+        correctAnswer: "1. Programming Language"
     },
     {
         title: "What is C++",
         choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
-        correctAnswer: "C++"
+        correctAnswer: "1. Programming Language"
     }
 ]
 
 let activeQuestion = 0;
 
-let currScore;
+let currScore = 0;
 
 document.onload = () => {
     currScore = 0
@@ -80,18 +83,31 @@ quiz.addEventListener("click", () => {
         if (activeQuestion < questions.length) {
 
             for (let i = 0; i < 4; i++) {
+                title.textContent = questions[activeQuestion].title;
                 document.getElementsByClassName("option")[i].textContent = questions[activeQuestion].choices[i];
                 document.getElementsByClassName("option")[i].setAttribute("value", questions[activeQuestion].choices[i]);
-
             }
             console.log(activeQuestion)
+            console.log(currScore);
 
+        } else {
+            //if we are out of questions end the quiz
+            for (let i = 0; i < 4; i++) {
+                buttons[i].setAttribute("style", "display: none")
+            }
+            title.textContent = "All done!"
+            let finalScore = document.createElement("p")
+            let initials = document.createElement("p")
+
+            finalScore.textContent = "Your final score is " + currScore
+            initials.textContent = "Enter Initials: "
+
+            document.querySelector("h2").appendChild(finalScore)
+            document.querySelector("h2").appendChild(initials)
         }
+        return;
 
     }
 
 
-
-
-    //if we are out of questions end the quiz
 })
