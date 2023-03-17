@@ -122,10 +122,14 @@ quiz.addEventListener("click", () => {
     sendScore.addEventListener("click", () => {
         //hide the div
 
+        // save the high score in the object
+        highScores.push({ Initials: "AA", Score: 52 })
+        console.log(highScores);
 
         //log the data to local storage as an object
+        localStorage.setItem("Scores", JSON.stringify(highScores))
 
-        //display the highscore area as a new page
+        //display the highscore area 
 
 
 

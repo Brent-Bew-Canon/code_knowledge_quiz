@@ -142,3 +142,8 @@ h3 {
     font-style: oblique;
     border: none;
 }
+
+.high-score-page {
+    margin-right: 20%;
+    margin-left: 20%;
+}
