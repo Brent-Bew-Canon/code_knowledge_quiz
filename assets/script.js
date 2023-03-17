@@ -4,12 +4,10 @@ let choice = document.querySelector("#options")
 let quiz = document.querySelector("#quiz-questions")
 let title = document.querySelector("h2")
 let buttons = quiz.querySelectorAll(".option")
-// console.log(start);
-// console.log(intro);
-// console.log(choice);
-// console.log(quiz);
-console.log(buttons);
-
+let quizDone = document.querySelector(".quiz-done")
+let main = document.querySelector("main")
+let hr = document.createElement("hr")
+let response = document.createElement("h3")
 
 const questions = [
     {
@@ -71,9 +69,22 @@ quiz.addEventListener("click", () => {
             currScore = currScore + 10
             console.log(currScore)
             console.log(activeQuestion)
+
+            //say "correct!"
+            response.innerText = "Correct!"
         } else {
             //lose time
+
+            //say "wrong!"
+            response.innerText = "Wrong!"
         }
+
+        //create hr tag and append to div #options
+
+
+        main.appendChild(hr)
+        main.appendChild(response)
+
 
         //increase our question index
         activeQuestion++
@@ -95,15 +106,15 @@ quiz.addEventListener("click", () => {
             for (let i = 0; i < 4; i++) {
                 buttons[i].setAttribute("style", "display: none")
             }
-            title.textContent = "All done!"
-            let finalScore = document.createElement("p")
-            let initials = document.createElement("p")
-
-            finalScore.textContent = "Your final score is " + currScore
-            initials.textContent = "Enter Initials: "
-
-            document.querySelector("h2").appendChild(finalScore)
-            document.querySelector("h2").appendChild(initials)
+            title.setAttribute("style", "display: none")
+            quizDone.setAttribute("style", "display: block")
+            // title.textContent = "All done!"
+            // let finalScore = document.createElement("p")
+            // let initials = document.createElement("p")
+            // finalScore.textContent = "Your final score is " + currScore
+            // initials.textContent = "Enter Initials: "
+            // document.querySelector("h2").appendChild(finalScore)
+            // document.querySelector("h2").appendChild(initials)
         }
         return;
 
