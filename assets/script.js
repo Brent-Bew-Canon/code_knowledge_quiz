@@ -6,6 +6,8 @@ let title = document.querySelector("h2")
 let buttons = quiz.querySelectorAll(".option")
 let quizDone = document.querySelector(".quiz-done")
 let main = document.querySelector("main")
+let sendScore = document.querySelector("#send-high-score")
+let displayScore = document.querySelector("#final-score")
 let hr = document.createElement("hr")
 let response = document.createElement("h3")
 
@@ -40,6 +42,9 @@ const questions = [
         choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
         correctAnswer: "1. Programming Language"
     }
+]
+
+let highScores = [
 ]
 
 let activeQuestion = 0;
@@ -108,17 +113,22 @@ quiz.addEventListener("click", () => {
             }
             title.setAttribute("style", "display: none")
             quizDone.setAttribute("style", "display: block")
-            // title.textContent = "All done!"
-            // let finalScore = document.createElement("p")
-            // let initials = document.createElement("p")
-            // finalScore.textContent = "Your final score is " + currScore
-            // initials.textContent = "Enter Initials: "
-            // document.querySelector("h2").appendChild(finalScore)
-            // document.querySelector("h2").appendChild(initials)
+            displayScore.textContent = currScore
         }
         return;
 
     }
 
+    sendScore.addEventListener("click", () => {
+        //hide the div
+
+
+        //log the data to local storage as an object
+
+        //display the highscore area as a new page
+
+
+
+    })
 
 })
