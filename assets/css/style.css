@@ -163,4 +163,18 @@ h3 {
 
 .high-score-page h2 {
     padding-bottom: 1vw;
+    font-size: 3.5vw;
+}
+
+ol {
+    margin-bottom: 2vw;
+    padding-left: 0;
+}
+
+ol li {
+    font-size: 2vw;
+}
+
+ol li:nth-child(odd) {
+    background-color: rgb(217, 184, 217);
 }
