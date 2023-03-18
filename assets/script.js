@@ -20,51 +20,54 @@ let done = false
 let hr = document.createElement("hr")
 let response = document.createElement("h3")
 
+//setup the array for quiz questions
 const questions = [
     {
-        title: "What is JavaScript?",
-        choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
-        correctAnswer: "Programming Language"
+        title: "String values are enclosed with ___",
+        choices: ["1. Quotations", "2. Parentheses ", "3. Brackets", "4. Angle Brackets"],
+        correctAnswer: "1. Quotations"
     },
     {
-        title: "What is Python?",
-        choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
-        correctAnswer: "1. Programming Language"
+        title: "A useful debugging tool is __",
+        choices: ["1. console.log", "2. console.debugCode", "3. code checker", "4. fixMyCode"],
+        correctAnswer: "1. console.log"
     },
     {
-        title: "What is HTML?",
-        choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
-        correctAnswer: "1. Programming Language"
+        title: "Which is not a JS data type?",
+        choices: ["1. Words", "2. String", "3. Number", "4. Object"],
+        correctAnswer: "1. Words"
     },
     {
-        title: "What is CSS?",
-        choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
-        correctAnswer: "1. Programming Language"
+        title: "A Javscript function is enclosed by what?",
+        choices: ["1. Curly Braces", "2. Brackets", "3. Single Quotes", "4. Double Quotes"],
+        correctAnswer: "1. Curly Braces"
     },
     {
-        title: "What is Elixir?",
-        choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
-        correctAnswer: "1. Programming Language"
+        title: "Arrays start at what index?",
+        choices: ["1. Zero", "2. One", "3. Negative 1", "4. Two"],
+        correctAnswer: "1. Zero"
     },
     {
-        title: "What is C++",
-        choices: ["1. Programming Language", "2. A thing you read at a play about coffee", "3. A bottele", "4. A funny joke"],
-        correctAnswer: "1. Programming Language"
+        title: "To accesses an array of objects in local storage, use ___",
+        choices: ["1. JSON", "2. jQuery", "3. Adobe", "4. Floppy Disc"],
+        correctAnswer: "1. JSON"
     }
 ]
 
+//initialize important variables including highscores array
 let secondsLeft = 70
-
-let highScores = [
-]
+let highScores = []
 let activeQuestion = 0;
 let currScore = 0;
 
 //pull local storage data to populate the highscores array if data exists
-highScores = JSON.parse(localStorage.getItem("Scores"))
+if (JSON.parse(localStorage.getItem("Scores")) != null) {
+    highScores = JSON.parse(localStorage.getItem("Scores"))
+}
 
-//function for clicking "start quiz"
+//function for clicking "start quiz" button on the intro screen div
 start.addEventListener("click", () => {
+
     //hide the intro div and display the quiz div
     intro.setAttribute("style", "display: none")
     quiz.setAttribute("style", "display: flex")
@@ -76,22 +79,25 @@ start.addEventListener("click", () => {
     title.textContent = questions[activeQuestion].title;
     document.getElementsByClassName("option")[0].textContent = questions[activeQuestion].choices[0];
     document.getElementsByClassName("option")[0].setAttribute("value", questions[activeQuestion].choices[0]);
-
 })
 
 //starts the timer counting down 1 second at a time
 function startTimer() {
     timer = setInterval(function () {
         secondsLeft--;
+
         //keep displaying the current time as long as it is >0
         if (secondsLeft >= 0) {
             timeCount.textContent = secondsLeft;
-            //if the timer drops below zero, display zero
+
+            //if the timer drops below zero, display zero as timer
         } else {
             timeCount.textContent = 0
         }
+
         //stop the timer if it reaches 0 or quiz finishes
         if (secondsLeft === 0 || done === true) {
+
             // Stops execution of action at set interval
             clearInterval(timer);
         }
@@ -100,15 +106,19 @@ function startTimer() {
 
 //function that evaluates the answer you select for each question
 quiz.addEventListener("click", function () {
+
     //check to see if the question was answered correctly
     let clicked = event.target;
     if (clicked.getAttribute("class") === "option") {
         if (clicked.getAttribute("value") === questions[activeQuestion].correctAnswer) {
+
             //say "correct!" if correct
             response.innerText = "Correct!"
         } else {
+
             //lose time if wrong
             secondsLeft = secondsLeft - 15
+
             //say "wrong!" if wrong
             response.innerText = "Wrong!"
         }
@@ -127,6 +137,7 @@ quiz.addEventListener("click", function () {
                 document.getElementsByClassName("option")[i].textContent = questions[activeQuestion].choices[i];
                 document.getElementsByClassName("option")[i].setAttribute("value", questions[activeQuestion].choices[i]);
             }
+
             //if we are out of questions end the quiz
         } else {
             quiz.setAttribute("style", "display: none")
@@ -144,9 +155,12 @@ quiz.addEventListener("click", function () {
     }
 })
 
+//function for clicking the "submit" button at end of quiz
 sendScore.addEventListener("click", function () {
 
+    // reset active question to 0
     activeQuestion = 0
+
     //log the data to local storage as an object
     highScores.push({ Initials: initials.value, Score: currScore })
     localStorage.setItem("Scores", JSON.stringify(highScores))
@@ -160,7 +174,6 @@ sendScore.addEventListener("click", function () {
     highScorePage.setAttribute("style", "display: block")
 
     //delete any old highscores
-
     if (parentList.children.length > 0) {
         let length = highScores.length
         for (let i = 0; i < length - 1; i++) {
@@ -181,7 +194,9 @@ sendScore.addEventListener("click", function () {
     viewScores.setAttribute("style", "display: none")
 });
 
+//function for clicking the "back" button in the highscores div
 back.addEventListener("click", function () {
+
     // hide the highscore div
     highScorePage.setAttribute("style", "display: none")
 
@@ -192,13 +207,13 @@ back.addEventListener("click", function () {
     viewScores.setAttribute("style", "display: block")
     time.setAttribute("style", "display: block")
 
-
     //reset timer value
     secondsLeft = 70
     done = false
     timeCount.textContent = 70
 })
 
+//function for clicking the "clear high scores" button in the highscore div
 clear.addEventListener("click", function () {
     // reset highscores variable 
     let length = highScores.length
@@ -215,7 +230,9 @@ clear.addEventListener("click", function () {
     }
 })
 
+//function for clicking the "view high scores" header element
 viewScores.addEventListener("click", function () {
+
     //hide all the divs/elements and show the highscores div
     intro.setAttribute("style", "display: none")
     quiz.setAttribute("style", "display: none")
