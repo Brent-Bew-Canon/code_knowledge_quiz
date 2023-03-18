@@ -14,8 +14,8 @@
 
 <body>
     <header>
-        <a href="#">View High Scores</a>
-        <p>Time: <span class="timer-count">0</span></p>
+        <a href="" id="view-scores">View High Scores</a>
+        <p id="time">Time: <span class="timer-count">0</span></p>
     </header>
 
     <main>
@@ -45,16 +45,17 @@
             <div class="finished-quiz">
                 <p>Enter Initials: </p>
                 <textarea name="" id="initials-area" cols="15" rows="1"></textarea>
-                <button id="send-high-score">Submit</button>
+                <button id="hs">Submit</button>
             </div>
+        </div>
 
-            <div class="high-score-page">
-                <h2>High Scores</h2>
-                <ol>
-                </ol>
-                <button>Go Back</button>
-                <button>Clear high scores</button>
-            </div>
+        <div class="high-score-page">
+            <h2>High Scores</h2>
+            <ol id="display-scores">
+            </ol>
+            <button id="back">Go Back</button>
+            <button id="clear">Clear high scores</button>
+        </div>
     </main>
     <script src="assets/script.js"></script>
 </body>

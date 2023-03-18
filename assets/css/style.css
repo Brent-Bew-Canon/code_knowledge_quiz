@@ -144,6 +144,23 @@ h3 {
 }
 
 .high-score-page {
-    margin-right: 20%;
-    margin-left: 20%;
+    text-align: left;
+    display: none;
+}
+
+.high-score-page button {
+    background-color: rgb(53, 28, 117);
+    border-radius: 10px;
+    border: none;
+    color: white;
+    padding: 1% 2% 1% 2%;
+    font-size: 2.5vw;
+}
+
+.high-score-page button:hover {
+    background-color: rgb(189, 96, 231)
+}
+
+.high-score-page h2 {
+    padding-bottom: 1vw;
 }
