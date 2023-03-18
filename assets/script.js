@@ -15,6 +15,8 @@ let clear = document.querySelector("#clear")
 let parentList = document.querySelector("#display-scores")
 let viewScores = document.querySelector("#view-scores")
 let time = document.querySelector("#time")
+let timeCount = document.querySelector(".timer-count")
+let done = false
 let hr = document.createElement("hr")
 let response = document.createElement("h3")
 
@@ -51,6 +53,8 @@ const questions = [
     }
 ]
 
+let secondsLeft = 70
+
 let highScores = [
 ]
 let activeQuestion = 0;
@@ -69,26 +73,48 @@ start.addEventListener("click", () => {
     //set active question to 0 for loop
     activeQuestion = 0
 
+    console.log(secondsLeft);
     //start timer
+    startTimer()
+
 })
+
+function startTimer() {
+    timer = setInterval(function () {
+        secondsLeft--;
+        if (secondsLeft >= 0) {
+            timeCount.textContent = secondsLeft;
+        } else {
+            timeCount.textContent = 0
+        }
+
+
+        if (secondsLeft === 0 || done === true) {
+            // Stops execution of action at set interval
+            clearInterval(timer);
+
+            // goes to quiz done screen
+
+        }
+
+    }, 1000);
+}
 
 quiz.addEventListener("click", function () {
     //check to see if the question was answered correctly
     let clicked = event.target;
     if (clicked.getAttribute("class") === "option") {
         if (clicked.getAttribute("value") === questions[activeQuestion].correctAnswer) {
-            console.log("hooray!!!")
-
             //score the point 
-            currScore = currScore + 10
-            console.log(currScore)
-            console.log(activeQuestion)
+            // currScore = currScore + 10
+            // console.log(currScore)
+            // console.log(activeQuestion)
 
             //say "correct!"
             response.innerText = "Correct!"
         } else {
             //lose time
-
+            secondsLeft = secondsLeft - 15
             //say "wrong!"
             response.innerText = "Wrong!"
         }
@@ -108,16 +134,22 @@ quiz.addEventListener("click", function () {
                 document.getElementsByClassName("option")[i].textContent = questions[activeQuestion].choices[i];
                 document.getElementsByClassName("option")[i].setAttribute("value", questions[activeQuestion].choices[i]);
             }
-            console.log(activeQuestion)
-            console.log(currScore);
+            // console.log(activeQuestion)
+            // console.log(currScore);
 
         } else {
             //if we are out of questions end the quiz
             quiz.setAttribute("style", "display: none")
             quizDone.setAttribute("style", "display: block")
+            if (secondsLeft >= 0) {
+                currScore = secondsLeft
+            } else {
+                currScore = 0
+            }
             displayScore.textContent = currScore
 
             //stop the timer
+            done = true
 
         }
     }
@@ -126,10 +158,10 @@ quiz.addEventListener("click", function () {
 
 sendScore.addEventListener("click", function () {
     //log the data to local storage as an object
-    console.log(initials.value);
+    // console.log(initials.value);
     highScores.push({ Initials: initials.value, Score: currScore })
     localStorage.setItem("Scores", JSON.stringify(highScores))
-    console.log(JSON.parse(localStorage.getItem("Scores")))
+    // console.log(JSON.parse(localStorage.getItem("Scores")))
 
     //hide the quiz done div
     quizDone.setAttribute("style", "display: none")
@@ -162,12 +194,18 @@ back.addEventListener("click", function () {
     //redisplay the timer and highscores link in header
     viewScores.setAttribute("style", "display: block")
     time.setAttribute("style", "display: block")
+
+
+    //reset timer value
+    secondsLeft = 70
+    done = false
+    timeCount.textContent = 70
 })
 
 clear.addEventListener("click", function () {
     // reset highscores variable 
     let length = highScores.length
-    for (let i = 0; i < length; i++) {
+    for (let i = 0; i <= length; i++) {
         highScores.pop()
     }
     //reset the local storage
@@ -191,13 +229,20 @@ viewScores.addEventListener("click", function () {
     viewScores.setAttribute("style", "display: none")
     highScorePage.setAttribute("style", "display: block")
     event.preventDefault()
+
+    //delete the li's from the highscore page
+    let length = highScores.length
+    for (let i = 0; i < length; i++) {
+        parentList.removeChild(parentList.lastElementChild)
+    }
+
+    //recreate the li's from the highscores array
     for (let i = 0; i < highScores.length; i++) {
         let list = document.createElement("li")
         document.getElementById("display-scores").appendChild(list)
         list.setAttribute("id", "list" + [i])
         list.textContent = highScores[i].Initials + " - " + highScores[i].Score
     }
-    //stop timer
 
 
 })
