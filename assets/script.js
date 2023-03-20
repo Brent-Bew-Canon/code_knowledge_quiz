@@ -1,3 +1,4 @@
+//assign html elements to variables for use
 let start = document.querySelector("#start-button")
 let intro = document.querySelector("#intro-screen")
 let choice = document.querySelector("#options")
@@ -19,6 +20,12 @@ let timeCount = document.querySelector(".timer-count")
 let done = false
 let hr = document.createElement("hr")
 let response = document.createElement("h3")
+
+//initialize important variables including highscores array
+let secondsLeft = 70
+let highScores = []
+let activeQuestion = 0;
+let currScore = 0;
 
 //setup the array for quiz questions
 const questions = [
@@ -54,18 +61,12 @@ const questions = [
     }
 ]
 
-//initialize important variables including highscores array
-let secondsLeft = 70
-let highScores = []
-let activeQuestion = 0;
-let currScore = 0;
-
 //pull local storage data to populate the highscores array if data exists
 if (JSON.parse(localStorage.getItem("Scores")) != null) {
     highScores = JSON.parse(localStorage.getItem("Scores"))
 }
 
-//function for clicking "start quiz" button on the intro screen div
+//event listener function for clicking "start quiz" button on the intro screen div
 start.addEventListener("click", () => {
 
     //hide the intro div and display the quiz div
@@ -87,12 +88,13 @@ function startTimer() {
         secondsLeft--;
 
         //keep displaying the current time as long as it is >0
-        if (secondsLeft >= 0) {
+        if (secondsLeft > 0) {
             timeCount.textContent = secondsLeft;
 
             //if the timer drops below zero, display zero as timer
         } else {
             timeCount.textContent = 0
+            endQuiz()
         }
 
         //stop the timer if it reaches 0 or quiz finishes
@@ -104,7 +106,7 @@ function startTimer() {
     }, 1000);
 }
 
-//function that evaluates the answer you select for each question
+//event listener function that evaluates the answer you select for each question
 quiz.addEventListener("click", function () {
 
     //check to see if the question was answered correctly
@@ -142,7 +144,7 @@ quiz.addEventListener("click", function () {
         } else {
             quiz.setAttribute("style", "display: none")
             quizDone.setAttribute("style", "display: block")
-            if (secondsLeft >= 0) {
+            if (secondsLeft > 0) {
                 currScore = secondsLeft
             } else {
                 currScore = 0
@@ -155,7 +157,23 @@ quiz.addEventListener("click", function () {
     }
 })
 
-//function for clicking the "submit" button at end of quiz
+//function to end the quiz - called when time runs out
+function endQuiz() {
+    quiz.setAttribute("style", "display: none")
+    quizDone.setAttribute("style", "display: block")
+    if (secondsLeft >= 0) {
+        currScore = secondsLeft
+    } else {
+        currScore = 0
+    }
+    displayScore.textContent = currScore
+
+    //stop the timer
+    done = true
+}
+
+
+//event listener function for clicking the "submit" button at end of quiz
 sendScore.addEventListener("click", function () {
 
     // reset active question to 0
@@ -194,7 +212,7 @@ sendScore.addEventListener("click", function () {
     viewScores.setAttribute("style", "display: none")
 });
 
-//function for clicking the "back" button in the highscores div
+//event listener function for clicking the "back" button in the highscores div
 back.addEventListener("click", function () {
 
     // hide the highscore div
@@ -213,7 +231,7 @@ back.addEventListener("click", function () {
     timeCount.textContent = 70
 })
 
-//function for clicking the "clear high scores" button in the highscore div
+//event listener function for clicking the "clear high scores" button in the highscore div
 clear.addEventListener("click", function () {
     // reset highscores variable 
     let length = highScores.length
@@ -230,8 +248,11 @@ clear.addEventListener("click", function () {
     }
 })
 
-//function for clicking the "view high scores" header element
+//event listener function for clicking the "view high scores" header element
 viewScores.addEventListener("click", function () {
+
+    //resets the timer
+    clearInterval(timer);
 
     //hide all the divs/elements and show the highscores div
     intro.setAttribute("style", "display: none")
