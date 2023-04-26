@@ -55,7 +55,7 @@ const questions = [
         correctAnswer: "1. Zero"
     },
     {
-        title: "To accesses an array of objects in local storage, use ___",
+        title: "To access an array of objects in local storage, use ___",
         choices: ["1. JSON", "2. jQuery", "3. Adobe", "4. Floppy Disc"],
         correctAnswer: "1. JSON"
     }
