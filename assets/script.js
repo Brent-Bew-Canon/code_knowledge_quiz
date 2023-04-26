@@ -21,6 +21,9 @@ let done = false
 let hr = document.createElement("hr")
 let response = document.createElement("h3")
 
+// TODO: Validate this 
+let qArray = document.getElementsByClassName("option")
+
 //initialize important variables including highscores array
 let secondsLeft = 70
 let highScores = []
@@ -78,8 +81,16 @@ start.addEventListener("click", () => {
 
     //Reset questions text to the first question
     title.textContent = questions[activeQuestion].title;
-    document.getElementsByClassName("option")[0].textContent = questions[activeQuestion].choices[0];
-    document.getElementsByClassName("option")[0].setAttribute("value", questions[activeQuestion].choices[0]);
+
+    // TODO: write loop to reset all the first questions and not just the first option
+
+    for (let i = 0; i < qArray.length; i++) {
+        qArray[i].textContent = questions[activeQuestion].choices[i];
+        qArray[i].setAttribute("value", questions[activeQuestion].choices[i]);
+    }
+
+    // document.getElementsByClassName("option")[0].textContent = questions[activeQuestion].choices[0];
+    // document.getElementsByClassName("option")[0].setAttribute("value", questions[activeQuestion].choices[0]);
 })
 
 //starts the timer counting down 1 second at a time
@@ -136,8 +147,8 @@ quiz.addEventListener("click", function () {
         if (activeQuestion < questions.length) {
             for (let i = 0; i < 4; i++) {
                 title.textContent = questions[activeQuestion].title;
-                document.getElementsByClassName("option")[i].textContent = questions[activeQuestion].choices[i];
-                document.getElementsByClassName("option")[i].setAttribute("value", questions[activeQuestion].choices[i]);
+                qArray[i].textContent = questions[activeQuestion].choices[i];
+                qArray[i].setAttribute("value", questions[activeQuestion].choices[i]);
             }
 
             //if we are out of questions end the quiz
